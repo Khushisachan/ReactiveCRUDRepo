@@ -27,4 +27,9 @@ public class DepartmentController {
     public Flux<Department> getAllDepartment(){
         return departmentService.getAllDepartment();
      }
+
+     @PutMapping("/update/{id}")
+    public Mono<Department> updateDepartment(@RequestBody Department department, @PathVariable Long id){
+        return departmentService.updateDepartment(department,id);
+     }
 }

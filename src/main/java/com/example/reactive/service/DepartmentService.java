@@ -26,4 +26,14 @@ public class DepartmentService {
     public Flux<Department> getAllDepartment(){
         return departmentRepository.findAll();
     }
+
+    public Mono<Department> updateDepartment(Department department, Long id){
+        return departmentRepository.findById(id)
+                .switchIfEmpty(Mono.error(new RuntimeException("Department Not Found")))
+                .flatMap(existingDepartment -> {
+                    existingDepartment.setName(department.getName());
+                    existingDepartment.setCode(department.getCode());
+                    return departmentRepository.save(existingDepartment);
+                });
+    }
 }
