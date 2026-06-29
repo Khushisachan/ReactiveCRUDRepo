@@ -28,4 +28,9 @@ public class EmployeeController {
     public Flux<Employee> getAllEmployee(){
         return employeeService.getAllEmployee();
     }
+
+    @PutMapping("/update/{id}")
+    public Mono<Employee> updateEmployee(@RequestBody Employee employee,@PathVariable Long id){
+        return employeeService.updateEmployee(employee,id);
+    }
 }

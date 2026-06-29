@@ -24,4 +24,14 @@ public class EmployeeService {
     public Flux<Employee> getAllEmployee(){
         return employeeRepository.findAll();
     }
+
+    public Mono<Employee> updateEmployee(Employee employee, Long id){
+        return employeeRepository.findById(id)
+                .switchIfEmpty(Mono.error(new RuntimeException("Employee Not Found")))
+            .flatMap(existingEmployee -> {
+            existingEmployee.setName(employee.getName());
+//            existingEmployee.setId(10L);
+            return employeeRepository.save(existingEmployee);
+        });
+    }
 }
